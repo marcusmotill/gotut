@@ -4,12 +4,21 @@ import (
 	"fmt"
 	"gotut/arrays"
 	"gotut/sorting/heap"
+	"gotut/sorting/merge"
 	"math/rand"
 	"sort"
 	"time"
 )
 
+type sortFunc func([]int) []int
+
 func main() {
+	test(merge.Sort, "merge")
+	test(heap.Sort, "heap")
+
+}
+
+func test(sorter sortFunc, name string) {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 
@@ -18,8 +27,8 @@ func main() {
 		tmp := make([]int, len(arr))
 		copy(tmp, arr)
 
-		fmt.Printf("Running heap sort array length %d: ", len(arr))
-		outArr := heap.Sort(tmp)
+		fmt.Printf("Running %s sort array length %d: ", name, len(arr))
+		outArr := sorter(tmp)
 		fmt.Print("verifying... ")
 		sort.Ints(arr)
 
@@ -37,7 +46,7 @@ func main() {
 		} else {
 			fmt.Print("passed\n")
 		}
-
 	}
 
+	fmt.Printf("\n---- Done testing %s ----\n\n", name)
 }
