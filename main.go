@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"gotut/arrays"
 	"gotut/sorting/heap"
+	"gotut/sorting/insertion"
 	"gotut/sorting/merge"
+	"gotut/sorting/quick"
 	"math/rand"
 	"sort"
 	"time"
@@ -13,17 +15,18 @@ import (
 type sortFunc func([]int) []int
 
 func main() {
+	test(quick.Sort, "quick")
 	test(merge.Sort, "merge")
 	test(heap.Sort, "heap")
-
+	test(insertion.Sort, "insertion")
 }
 
 func test(sorter sortFunc, name string) {
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 
-	for i := 1; i <= 100; i++ {
-		arr := arrays.Generate(r1.Intn(1000), r1.Intn(1000))
+	for i := 1; i <= 101; i++ {
+		arr := arrays.Generate(r1.Intn(101), r1.Intn(101))
 		tmp := make([]int, len(arr))
 		copy(tmp, arr)
 
